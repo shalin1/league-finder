@@ -12,7 +12,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create league" do
     assert_difference('League.count') do
-      post leagues_url, params: { league: { lat: @league.lat, long: @league.long, name: @league.name, price: @league.price } }, as: :json
+      post leagues_url, params: { league: { lat: @league.latitude, long: @league.longitude, name: @league.name, price: @league.price } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update league" do
-    patch league_url(@league), params: { league: { lat: @league.lat, long: @league.long, name: @league.name, price: @league.price } }, as: :json
+    patch league_url(@league), params: { league: { lat: @league.latitude, long: @league.longitude, name: @league.name, price: @league.price } }, as: :json
     assert_response 200
   end
 

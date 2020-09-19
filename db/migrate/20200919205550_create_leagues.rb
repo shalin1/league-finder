@@ -3,8 +3,8 @@ class CreateLeagues < ActiveRecord::Migration[6.0]
     create_table :leagues do |t|
       t.string :name, presence: true
       t.integer :price, presence: true, numericality: {only_integer: true}
-      t.decimal :lat, presence: true, precision: 10, scale: 6
-      t.decimal :long, presence: true, precision: 10, scale: 6
+      t.decimal :latitude, presence: true, precision: 10, scale: 6
+      t.decimal :longitude, presence: true, precision: 10, scale: 6
 
       t.timestamps
     end

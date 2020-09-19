@@ -4,12 +4,16 @@ class LeaguesController < ApplicationController
   # GET /leagues
   def index
     @leagues = League.all
-
+    if(league_params[:latitude] && league_params[:longitude])
+      @leagues = League.near([params[:latitude],params[:longitude],params[:range] || 5])
+    end
+    puts league_params[:budget] if(league_params[:budget])
     render json: @leagues
   end
 
   # GET /leagues/1
   def show
+    puts @league.location
     render json: @league
   end
 
@@ -47,6 +51,6 @@ class LeaguesController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def league_params
       puts params
-      params.require(:league).permit(:name, :price, :lat, :long)
+      params.permit(:league, :name, :price, :latitude, :longitude, :budget)
     end
 end

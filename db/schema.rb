@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 2020_09_19_205550) do
   create_table "leagues", force: :cascade do |t|
     t.string "name"
     t.integer "price"
-    t.decimal "lat", precision: 10, scale: 6
-    t.decimal "long", precision: 10, scale: 6
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
