@@ -1,8 +1,8 @@
 class League < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true, length: {maximum: 100}
   validates :price, presence: true, numericality: {greater_than_or_equal_to: 0, only_integer: true}
-  validates :latitude, presence: true
-  validates :longitude, presence: true
+  validates :latitude, presence: true, numericality: {greater_than_or_equal_to: -90, less_than_or_equal_to: 90}
+  validates :longitude, presence: true, numericality: {greater_than_or_equal_to: -180, less_than_or_equal_to: 180}
 
   # this little magic spell enables us to use
   # League.near([lat,long],disttance)
