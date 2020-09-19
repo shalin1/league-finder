@@ -3,11 +3,27 @@ class LeaguesController < ApplicationController
 
   # GET /leagues
   def index
-    @leagues = League.all
-    if(league_params[:latitude] && league_params[:longitude])
-      @leagues = League.near([params[:latitude],params[:longitude],params[:range] || 5])
+    if league_params[:latitude] && league_params[:longitude]
+      range = params[:range] || 5 # in miles
+      @leagues = League.near([params[:latitude],params[:longitude]],range)
+    else
+      @leagues = League.all
     end
-    puts league_params[:budget] if(league_params[:budget])
+
+   if league_params[:budget]
+     budget = league_params[:budget].to_i
+     @leagues = @leagues.sort_by(&:price)
+     total_spend = 0
+     i = 0
+     while i < @leagues.length
+       total_spend += @leagues[i].price
+       puts total_spend,'total_spend'
+       break if total_spend > budget
+       i+=1
+     end
+     @leagues = @leagues.slice!(0, i)
+   end
+
     render json: @leagues
   end
 
@@ -50,7 +66,6 @@ class LeaguesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def league_params
-      puts params
-      params.permit(:league, :name, :price, :latitude, :longitude, :budget)
+      params.permit(:name, :price, :latitude, :longitude, :budget, :range)
     end
 end
