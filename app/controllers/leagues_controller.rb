@@ -1,4 +1,6 @@
 class LeaguesController < ApplicationController
+  before_action :set_league, only: [:show]
+
   # GET /leagues
   def index
     # filter leagues by proximity to lat/long if params provided
@@ -22,14 +24,24 @@ class LeaguesController < ApplicationController
     @league = League.new(league_params)
 
     if @league.save
-      render json: @league, status: :created
+      render json: @league, status: :created, location: @league
     else
       render json: @league.errors, status: :unprocessable_entity
     end
   end
 
+  # POST /leagues/:id
+  def show
+    render json: @league
+  end
+
   private
-    def league_params
-      params.permit(:name, :price, :latitude, :longitude, :budget, :range)
-    end
+
+  def set_league
+    @league = League.find(params[:id])
+  end
+
+  def league_params
+    params.permit(:name, :price, :latitude, :longitude, :budget, :range)
+  end
 end

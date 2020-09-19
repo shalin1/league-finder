@@ -2,7 +2,7 @@
 
 ##What does it do?
 
-This app provides two simple endpoints for leagues to upload themselves, and for sponsors to see a list of leagues that are within an area they care about and within their budget.
+This app provides two simple endpoints for leagues to upload themselves, and for sponsors to see a individual leagues as well as a list of leagues that are within an area they care about and within their budget.
 
 ##What were some trade-offs?
 
@@ -26,13 +26,15 @@ The steps to get a dev server running should be familiar.  After cloning down th
 From there, you can send `GET` and `POST` requests to http://localhost:3000/leagues with your favorite client to your heart's content!
 
 ### Api Spec 
- `POST` requests to the `/leagues` endpoint with a `name`, `price`, `latitude`, and `longitude` will create the league if valid, and return an error message if not.  
+ `POST` requests to the `/leagues` endpoint with a `name`, `price`, `latitude`, and `longitude` will create the league if valid, and return an error message if not.  All parameters are required.
  
  `GET` requests to the `/leagues` endpoint will return all leagues
  
  `GET` requests to the `/leagues` endpoint with `latitude`, `longitude`, and `range` parameters (range provided in miles) will return all leagues within the given range.
  
  `GET` requests to the `/leagues` endpoint with a `budget` parameter will return a list of leagues sorted by budget, lowest first, with the maximum number of leagues that could conceivably fit within the given budget based on Price, which is assumed to be provided in cents.
+ 
+ `Get` requests to `/leagues/:id` will return a simple view of the one league.
  
 #### Sample requests:
  
