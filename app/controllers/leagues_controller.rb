@@ -3,28 +3,18 @@ class LeaguesController < ApplicationController
 
   # GET /leagues
   def index
-    if league_params[:latitude] && league_params[:longitude]
-      range = params[:range] || 5 # in miles
-      @leagues = League.near([params[:latitude],params[:longitude]],range)
-    else
+    if league_params[:latitude].nil? || league_params[:longitude].nil? && league_params[:range].nil?
       @leagues = League.all
+    else
+      @leagues = League.near([params[:latitude],params[:longitude]],params[:range])
     end
 
-   if league_params[:budget]
-     budget = league_params[:budget].to_i
-     @leagues = @leagues.sort_by(&:price)
-     total_spend = 0
-     i = 0
-     while i < @leagues.length
-       total_spend += @leagues[i].price
-       puts total_spend,'total_spend'
-       break if total_spend > budget
-       i+=1
-     end
-     @leagues = @leagues.slice!(0, i)
-   end
-
-    render json: @leagues
+    budget = league_params[:budget].to_i
+    if budget.zero?
+      render json: @leagues
+    else
+      render json: LeaguesFilteredByRecommendedForBudget.call(leagues:@leagues,budget:budget)
+    end
   end
 
   # GET /leagues/1
