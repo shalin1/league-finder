@@ -4,6 +4,10 @@ class League < ApplicationRecord
   validates :latitude, presence: true
   validates :longitude, presence: true
 
+  # this little magic spell enables us to use
+  # League.near([lat,long],disttance)
+  # as part of the Geocoder library
+  #
+  # See https://www.rubydoc.info/gems/geocoder/frames#geospatial-database-queries for more details
   reverse_geocoded_by :latitude, :longitude
-  after_validation :reverse_geocode
 end
