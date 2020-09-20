@@ -1,18 +1,12 @@
-# League Finder
+# League Finder BETA 🌎💰⚾ 🔍️✨
+a coding challenge for my good friends at LeagueSide
 
-##What does it do?
+# What does it do?
 
 This app provides two simple endpoints for leagues to upload themselves, and for sponsors to see a individual leagues as well as a list of leagues that are within an area they care about and within their budget.
 
-##What were some trade-offs?
 
-Rails is easy to expand, but this could have easily been a much light weight Sinatra app. That said, it would probably be easier to extend in to an enterprise app.
-
-This project ships with no tests, because I only had a couple hours to work on it for this code challenge.  Production code shouldn't ship without at least a simple request spec with a few sample objects.
-
-We could have manually calculated distance from latitude and longitude instead of bringing in a library.  Advantages to not relying on external gems include possible being more performant for this relatively simple case, more explicit, or more secure, as well as reducing bundle size, but geocoding has quite a few edge cases and I'd be very unlikely to not use a library in production unless we were running in to terrible issues wiht the integration.
-
-###Running locally
+# Running locally
 
 This guide assumes that the reader has Ruby version 2.5.3 or greater installed along with SQLite3.  Further info for those unfamiliar with theee framework can be found at https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project. 
 
@@ -25,7 +19,8 @@ The steps to get a dev server running should be familiar.  After cloning down th
 
 From there, you can send `GET` and `POST` requests to http://localhost:3000/leagues with your favorite client to your heart's content!
 
-### Api Spec 
+# Api Spec 
+
  `POST` requests to the `/leagues` endpoint with a `name`, `price`, `latitude`, and `longitude` will create the league if valid, and return an error message if not.  All parameters are required.
  
  `GET` requests to the `/leagues` endpoint will return all leagues
@@ -36,7 +31,7 @@ From there, you can send `GET` and `POST` requests to http://localhost:3000/leag
  
  `Get` requests to `/leagues/:id` will return a simple view of the one league.
  
-#### Sample requests:
+# Sample requests:
  
  Running `curl -X GET http://localhost:3000/leagues` in the command line will get all leagues
  
@@ -55,6 +50,12 @@ From there, you can send `GET` and `POST` requests to http://localhost:3000/leag
     "updated_at":"2020-09-19T23:29:49.500Z"
 }
 ```
-  
 
+# What were some trade-offs?
+
+Rails is easy to expand, but this could have easily been a much lighter weight Sinatra app. That said, it would probably be easier to extend this in to an enterprise app, and it is nice to just roll with convention and know that most Rails coders would be able to figure out what's going on right away.
+
+This project ships with no tests, because I only had a couple hours to work on it for this code challenge.  Production code shouldn't ship without at least a simple request spec with a few sample objects. Similarly, a Rubocop-based linter, a bare-bones front end client, and some circle configs to run tests on pull request creation would be high on my list of things to do in the first day of bootstrapping a real service.
+
+We could have manually calculated distance from latitude and longitude instead of bringing in a library.  Advantages to not relying on external gems include possible being more performant for this relatively simple case, more explicit, or more secure, as well as reducing bundle size, but geocoding has quite a few edge cases and I'd be very unlikely to not use a library in production unless we were running in to terrible issues with the integration.
 
